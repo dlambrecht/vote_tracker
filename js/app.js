@@ -7,41 +7,19 @@ var photoArray;
 // need to find path - location of
 var Photo = function (fileLocation) {
   this.path = fileLocation;
-  this.votes = 1; //each photo starts with 1 vote
-  // this.index = //where it lives in the photoArray
-  //             // not sure if we need this
+  this.votes = 0; 
+}
+ Photo.prototype.highlight = function () {
+ // highlight a color around the photo
 }
 
-//Instantiate each photo object
-var photo0 = new Photo ("img/kitten/kit01.jpg",1);
-var photo1 = new Photo ("img/kitten/kit02.jpg",1);
-var photo2 = new Photo ("img/kitten/kit03.jpg",1);
-var photo3 = new Photo ("img/kitten/kit04.jpg",1);
-var photo4 = new Photo ("img/kitten/kit05.jpg",1);
-var photo5 = new Photo ("img/kitten/kit06.jpg",1);
-var photo6 = new Photo ("img/kitten/kit07.jpg",1);
-var photo7 = new Photo ("img/kitten/kit08.jpg",1);
-var photo8 = new Photo ("img/kitten/kit09.jpg",1);
-var photo9 = new Photo ("img/kitten/kit10.jpg",1);
-var photo10 = new Photo ("img/kitten/kit11.jpg",1);
-var photo11 = new Photo ("img/kitten/kit12.jpg",1);
-var photo12 = new Photo ("img/kitten/kit13.jpg",1);
-var photo13 = new Photo ("img/kitten/kit14.jpg",1);
-
-//Filling Array with the photo objects
-
-var photoArray = [ {photo0}, {photo1}, {photo2}, {photo3}, {photo4}, {photo5},
-                   {photo6}, {photo7}, {photo8}, {photo9}, {photo10}, {photo11},
-                   {photo12}, {photo13} ]
 
 
 //Tracker Object
 
 var Tracker = function () {
-
- Photo.prototype.highlight = function () {
- // highlight a color around the photo
 }
+
 
  Tracker.prototype.waitingForVote = function () {
   //This looks like State waiting for Vote
@@ -52,18 +30,48 @@ var Tracker = function () {
   //drawTheChart = function ()
  }
 
-Tracker.prototype.getRandonInt = function() {  //picks two a random pic to display
+Tracker.prototype.getRandomInt = function() {  //picks two a random pic to display
 // select two random elements from the photo array
+console.log("random", Math.floor((Math.random() * (13 - 0) +1) +0));
+ // var rand = Math.floor((Math.random() * (13 - 0) +1) +0);
+ // var rightPhoto = photoArray[rand];
+ // var leftPhoto = photoArray[rand];
+}
 
-Display.prototype.displayPhotos = function () {
+  
+
+var CutestKitten = function() {
+  var photos = [];                   
+  for (var i = 1; i <= 13; i ++){
+    photos.push(new Photo("img/kitten/kit" + i + ".jpg"));
+  }
+  var img = document.createElement('img');
+  img.setAttribute('src', photos[0].path);
+  document.getElementById('leftPic').appendChild(img);
+  //this.tracker = new Tracker();
+  //this.tracker.getRandomInt();
+
+}
+
+var photo1 = new CutestKitten();
+var photo2 = new CutestKitten();
+
+
+
+
+
+
+
+    
+//Display.prototype.displayPhotos = function () {
   //display the random photo
-  document.writeElementById
+  //document.writeElementById
   //prevent picking same photo twice
   // do an if then statement if(photo1 === photo2), then re-roll
-}
+//}
 
-}
+//}
 //some document get.ElementById = variables to access and manipulate
 // the document (html page)
-};
+//};
 
