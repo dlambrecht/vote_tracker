@@ -7,11 +7,13 @@ var photoArray;
 // need to find path - location of
 var Photo = function (fileLocation) {
   this.path = fileLocation;
-  this.votes = 0; 
+  this.votes = 0;
 }
  Photo.prototype.highlight = function () {
  // highlight a color around the photo
 }
+
+////Instantiate each photo object
 
 
 
@@ -19,7 +21,6 @@ var Photo = function (fileLocation) {
 
 var Tracker = function () {
 }
-
 
  Tracker.prototype.waitingForVote = function () {
   //This looks like State waiting for Vote
@@ -38,23 +39,38 @@ console.log("random", Math.floor((Math.random() * (13 - 0) +1) +0));
  // var leftPhoto = photoArray[rand];
 }
 
-  
-
-var CutestKitten = function() {
-  var photos = [];                   
-  for (var i = 1; i <= 13; i ++){
-    photos.push(new Photo("img/kitten/kit" + i + ".jpg"));
-  }
-  var img = document.createElement('img');
-  img.setAttribute('src', photos[0].path);
-  document.getElementById('leftPic').appendChild(img);
-  //this.tracker = new Tracker();
-  //this.tracker.getRandomInt();
+var Election = function(leftImg, rightImg) {
+  this.leftImg = leftImg;
+  this.rightImg = rightImg;
+  this.tracker = new Tracker();
 
 }
 
-var photo1 = new CutestKitten();
-var photo2 = new CutestKitten();
+
+
+var CutestKitten = function() {
+  this.elections = [];
+  for (var i = 1; i <= 13; i = i + 2){
+    this.elections.push(new Election("img/kitten/kit" + i + ".jpg", "img/kitten/kit" + (i + 1) + ".jpg"));
+  }
+  this.displayElection(this.elections[0]);
+  var _this = this;
+  document.getElementById("vote").addEventListener('click', function(){
+    _this.nextElection();
+  });
+}
+CutestKitten.prototype.nextElection = function (election) {
+  var random = Math.floor(Math.random() * this.elections.length);
+  this.displayElection(this.elections[random]);
+}
+
+CutestKitten.prototype.displayElection = function (election) {
+  this.currentElection = election;
+  document.getElementById('leftImg').setAttribute('src', election.leftImg);
+  document.getElementById('rightImg').setAttribute('src', election.rightImg);
+}
+
+var cutestKitten = new CutestKitten();
 
 
 
@@ -62,7 +78,9 @@ var photo2 = new CutestKitten();
 
 
 
-    
+
+
+
 //Display.prototype.displayPhotos = function () {
   //display the random photo
   //document.writeElementById
