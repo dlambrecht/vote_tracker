@@ -1,95 +1,77 @@
-'use strict'; //makes it more compatible
+'use strict'
 
-var photoArray;
-//Photo Constructor
-// will display images in webpage as clickable
-// need to keep track of votes
-// need to find path - location of
-var Photo = function (fileLocation) {
-  this.path = fileLocation;
-  this.votes = 0;
-}
- Photo.prototype.highlight = function () {
- // highlight a color around the photo
-}
+var Photo = function(fileLocation, startVotes) {
+	this.path  = fileLocation;
+	this.votes = startVotes;
+};
 
-////Instantiate each photo object
+var Tracker = function() {
+  // array of Photo objects - filled in by initializeData()
+  this.photos = [];
+  
+  // maximum number of photos
+  this.maxPhotos = 14;
+  
+  // handle to the left Photo instance
+  this.leftPhoto = null;
+  
+  // handle to the right Photo instance
+  this.rightPhoto = null;
+  
+  $('#leftImg').on('click', $.proxy(this.leftImgClicked, this));
+  $('#rightImg').on('click', $.proxy(this.rightImgClicked, this));
+  $('#next').on('click', $.proxy(this.showNextPair, this));
+};
 
-
-
-//Tracker Object
-
-var Tracker = function () {
-}
-
- Tracker.prototype.waitingForVote = function () {
-  //This looks like State waiting for Vote
-  //receive the click and increment the vote count
-  //increment the vote count
-  //event listener on each photo
-  //highlight = function ()
-  //drawTheChart = function ()
- }
-
-Tracker.prototype.getRandomInt = function() {  //picks two a random pic to display
-// select two random elements from the photo array
-console.log("random", Math.floor((Math.random() * (13 - 0) +1) +0));
- // var rand = Math.floor((Math.random() * (13 - 0) +1) +0);
- // var rightPhoto = photoArray[rand];
- // var leftPhoto = photoArray[rand];
-}
-
-var Election = function(leftImg, rightImg) {
-  this.leftImg = leftImg;
-  this.rightImg = rightImg;
-  this.tracker = new Tracker();
-
-}
-
-
-
-var CutestKitten = function() {
-  this.elections = [];
-  for (var i = 1; i <= 13; i = i + 2){
-    this.elections.push(new Election("img/kitten/kit" + i + ".jpg", "img/kitten/kit" + (i + 1) + ".jpg"));
+Tracker.prototype.initializeData = function() {
+  for(var i = 0; i < this.maxPhotos; i++) {
+    var photo = new Photo('img/kitten/kit' + (i + 1) + '.jpg', 0);
+    this.photos.push(photo);
+    
   }
-  this.displayElection(this.elections[0]);
-  var _this = this;
-  document.getElementById("vote").addEventListener('click', function(){
-    _this.nextElection();
-  });
-}
-CutestKitten.prototype.nextElection = function (election) {
-  var random = Math.floor(Math.random() * this.elections.length);
-  this.displayElection(this.elections[random]);
+};
+
+
+Tracker.prototype.leftImgClicked = function() {
+  $('#leftImg').addClass('highlight');
+  this.leftPhoto.votes++;
+ 
 }
 
-CutestKitten.prototype.displayElection = function (election) {
-  this.currentElection = election;
-  document.getElementById('leftImg').setAttribute('src', election.leftImg);
-  document.getElementById('rightImg').setAttribute('src', election.rightImg);
+Tracker.prototype.rightImgClicked = function() {
+  $('#rightImg').addClass('highlight');
+  this.rightPhoto.votes++;
+ 
 }
 
-var cutestKitten = new CutestKitten();
+// Return: random index into photos array
+Tracker.prototype.generateRandom = function() {
+	return Math.floor(Math.random() * this.photos.length);
+};
+
+// Return random photo object from the photo array
+Tracker.prototype.randomPhoto = function() {
+  return this.photos[this.generateRandom()];
+};
+
+Tracker.prototype.showNextPair = function() {
+  this.leftPhoto = this.randomPhoto();
+  this.rightPhoto = this.randomPhoto();
+  while (this.leftPhoto === this.rightPhoto) {
+    this.rightPhoto = this.randomPhoto();
+  }
+	$('#leftImg').attr('src', this.leftPhoto.path);
+  $('#rightImg').attr('src', this.rightPhoto.path);
+  $('#leftImg').removeClass('highlight');
+  $('#rightImg').removeClass('highlight');
+};
 
 
+$(document).ready(function() {
 
+  var tracker = new Tracker();
+  tracker.initializeData();
+  tracker.showNextPair();
+  
 
-
-
-
-
-
-
-//Display.prototype.displayPhotos = function () {
-  //display the random photo
-  //document.writeElementById
-  //prevent picking same photo twice
-  // do an if then statement if(photo1 === photo2), then re-roll
-//}
-
-//}
-//some document get.ElementById = variables to access and manipulate
-// the document (html page)
-//};
-
+});
