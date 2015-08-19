@@ -1,3 +1,7 @@
+// 6372bb21c05054d ID
+// 8221ff1296e23e34a79418ce3279e9b2c84a4153 SECRET
+// Authorization: Client-ID YOUR_CLIENT_ID (send an authorization 
+// header with your client_id in your requests
 'use strict'
 
 var Photo = function(fileLocation, startVotes) {
