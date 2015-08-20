@@ -1,0 +1,21 @@
+{
+  "name": "vote_tracker",
+  "version": "0.0.0",
+  "description": "vote tracker app",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dlambrecht/vote_tracker.git"
+  },
+  "author": "Darcy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dlambrecht/vote_tracker/issues"
+  },
+  "dependencies": {
+    "express": "^4.13.3"
+  }
+}
