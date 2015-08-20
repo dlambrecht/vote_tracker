@@ -2,3 +2,15 @@
 .highlight {
   border: blue 10px solid;
 }
+h1 {
+  text-align: center;
+}
+
+.container {
+  text-align: center;
+}
+button {
+  position: absolute;
+  top: 50%;
+}
+  

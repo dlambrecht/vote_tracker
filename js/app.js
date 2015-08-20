@@ -27,12 +27,32 @@ var Tracker = function() {
   $('#next').on('click', $.proxy(this.showNextPair, this));
 };
 
-Tracker.prototype.initializeData = function() {
+Tracker.prototype.initializeLocalData = function() {
   for(var i = 0; i < this.maxPhotos; i++) {
     var photo = new Photo('img/kitten/kit' + (i + 1) + '.jpg', 0);
     this.photos.push(photo);
     
   }
+};
+
+Tracker.prototype.initializeImgurData = function() {
+  $.ajax ( {
+    url: 'https://api.imgur.com/3/album/DDoWy',
+    method: 'GET',
+    headers: {
+      'Authorization': 'Client-ID 6372bb21c05054d'
+    }
+  })
+  .done($.proxy(function(res) {
+    for (var i = 0; i < res.data.images.length; i++) {
+      var photo = new Photo(res.data.images[i].link, 0);
+      this.photos.push(photo);
+    }
+    this.showNextPair();
+  }, this))
+  .fail(function(err) {
+    console.log(err);
+  });
 };
 
 
@@ -74,8 +94,5 @@ Tracker.prototype.showNextPair = function() {
 $(document).ready(function() {
 
   var tracker = new Tracker();
-  tracker.initializeData();
-  tracker.showNextPair();
-  
-
+  tracker.initializeImgurData();
 });
